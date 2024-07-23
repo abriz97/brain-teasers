@@ -1,0 +1,263 @@
+\section{Brain Teasers}
+
+\subsection{Problem simplifications}
+
+\emph{I had already seen similar problems, the solutions are not surprising nor complicated}.
+
+\begin{qanda}
+    \Q
+    Five pirates looted a chest full of 100 gold coins. 
+    Being a bunch of democratic pirates, they agree on the following method to divide the loot.
+    The most senior pirate will propose a distribution of the coins. All pirates, \emph{including the most senior pirate}, will then vote. If at least 50\% (inclusive?) of the pirates accept the proposal, the gold is divided as proposed. If not, the most senior pirate will be fed to shark and then process starts over with the next most senior pirate...
+    The process is repeated until a plan is approved. All pirates are perfectly rational: above all, they want to stay alive, and then get as much gold as possible. Being blood thirsty pirates, they want to have fewer pirates on the boat if given a choice between otherwise equal outcomes. How will the gold coins be divided in the end?
+    \A It is probably better to start with simpler scenarios. I will assume that the \textquote{at least} is not inclusive.
+    \begin{itemize}
+        \item[1 pirate] The \emph{senior pirate} will get all the 100 gold coins.
+        \item[2 pirates] The 2nd senior pirate will have no interest in any offer that doesn't give him 100 gold coins: he will always vote against the proposal (even if the senior pirate proposes to get give him all the gold). 
+        \item[3 pirates] The 2nd senior pirate has no interest in becoming the next senior pirate and will always vote in favour of what's proposed. The senior pirate will therefore propose to keep all the gold for himself, and win.
+    \end{itemize}
+    By induction, if the number of pirates is odd, the senior pirate will get all the gold, and if the number of pirates is even, the second senior pirate will get it. \\
+    \emph{The solution actually assumed an inclusive vote, where 50\% votes is enough to win. This makes the game more interesting, and makes it so that }
+\end{qanda}
+
+\begin{qanda}
+    \Q
+    100 tigers and 1 sheep are put in a magic island that only has grass.
+    Tigers can eat grass, but prefer to eat sheep.
+    Assume that: only one tiger can eat the sheep, and that a tiger is transformed into a sheep after eating it.
+    All tigers are perfectly rational and want to survive. Will the sheep be eaten?
+    \A if there were only one tiger, the sheep would be eaten.
+    If there were two tigers, no tiger would eat the sheep, as the other tiger would then eat them afterwards.
+    By induction, we see that the sheep will be eaten if there are an odd number of tigers, and will survive if there are an even number of tigers (e.\,g.\ 100).
+\end{qanda}
+
+
+\subsection{Logic Reasoning}
+
+\begin{qanda}
+    \Q 
+    Four people, $A, B, C$ and $D$ need to get across a river. The only way to cross the river is by an old bridge, which holds at most 2 people at a time. 
+    Being dark, they can't cross the bridge without a torch, of which they only have one.
+    So each pair can only walk at the speed of the slower person.
+    They need to get all of them across to the other side as quickly as possible.
+    $A$ is the slowest and takes 10 minutes to cross; $B$ takes 5 minutes; $C$ takes 2 minutes; and $D$ takes 1 minute. 
+    What is the minimum time to get all of them across the other side?
+    \A
+    Idea: we should always send the fastest person back. 
+    $A$ and $B$ should go together, but not first.
+    So we'd have $C, D$ go together, $D$ goes back and brings the torch to $A, B$, which go together, sending $C$ back, and then having $C, D$ go together.
+    It wouldn't make a difference to bring $C$ back the first time.
+    This takes 2 + 1 + 10 + 2 + 2 = 17 minutes.
+\end{qanda}
+
+\begin{qanda}
+  \Q Long description
+  \A Not hard, nor interesting. Just go step by step.
+\end{qanda}
+
+\begin{qanda}
+  \Q A casino offers a card game using a normal deck of 52 cards. The rule is that you turn over two cards each time.
+  For each pair, if both are black, the go to the dealer's pile; if both are red, they go to your pile; if one black and one red, they are discarded. 
+  The process is repeated until you two go through all 52 cards. 
+  If you have more cards in your pile, you win \$100; otherwise (including ties) you get nothing. 
+  The casino allows you to negotiate the price you want to pay for the game.
+  How much would you be willing to play this game?
+
+  \A 
+  Intuitively, the expected value of the game is 0. For any game, a number $n \leq 26$ of pairs will be discarded. There will then remain $26 - n$ pairs that are of the same colour. Half of these will go to the dealer, and half to the player, resulting in a draw. \\
+  \emph{Not complicated.}
+\end{qanda}
+
+\begin{qanda}
+    \Q You have two ropes, each of which takes 1 hour to burn. But either rope has different densities at different points, so there's no guarantee of consistency in the time it takes different sections within the rope to burn. How do you use these two ropes to measure 45 minutes?
+    \A 
+    Consider all the options you have. You can burn both ends of the ropes, hence halving the burning time to 30 minutes.
+    We are still not there, and we do not want to burn all our ropes by minute 30.
+    Instead, burn one rope from both ends, and burn the other from only one ends.
+    After 30 minutes, the first rope will have burnt completely, while the second one will be halfway. Burn the other end of the second rope, to half the remaining time to 15 minutes. 
+    In total, this takes 45 minutes.
+\end{qanda}
+
+\begin{qanda} % defective ball
+    \Q 
+    You have 12 identical balls.
+    One of the balls is heavier OR lighter than the rest. 
+    Using just a balance that can only show you which side of the tray is heavier, how can you determine which ball is the defective one with 3 measurements?
+
+    \A
+    I think it is better to answer this question with a nested list.
+    Split the balls into three groups of 4.
+    Compare the weight of the first two groups.
+    \begin{itemize}
+        \item If they are identical, the weird ball is in the third group, and we have 2 measurements to find it. We further split the third group into two subgroups of 2 and we use one measurement to compare the weight of the two balls in the first subgroup. 
+        \begin{itemize}
+            \item If they are the same, then the weird ball is in the second subgroup. We compare one ball in the second subgroup with a normal ball. 
+            \begin{itemize}
+                \item If the weight differs, the ball from the subgroup is the weird one.
+                \item If not, the other ball in the subgroup is the weird one.
+            \end{itemize} 
+            \item If they are not the same, then the weird ball is in the first subgroup 
+                Compare one of these balls with a normal ball and proceed as before.
+        \end{itemize} 
+        \item If they are not the same, then the weird ball is in one of the first two groups. 
+            \ldots
+            \emph{need to think about this more clearly. Read the solution and I will sleep on it.}
+    \end{itemize}
+\end{qanda}
+
+\begin{qanda} % Trailing zeroes
+    \Q How many trailing zeroes are there in $100!$ ?
+    \A Using the prime factorisation of $x=100!$, we can write: 
+    $$x = \prod_{p \notin \{2,5\}} p^n_p \cdot 2^{n_2} \cdot 5^{n_5}.$$
+    The number of trailing zeroes is then $\min(n_2, n_5)$. As multiple of twos are more common than multiple of fives, we simply have to count how many 5 factors there are among the first 100 integers.
+    These are 20 + 4 = 24, so there are 24 trailing zeroes in $100!$.
+\end{qanda}
+
+\begin{qanda} % Horse race
+    \Q There are 25 horses, each of which runs at a constant speed that is different from the other horses'. 
+    Since the track only has 5 lanes, each race can have at most 5 horses. 
+    If you need to find the 3 fastest horses, what is the minimum number of races needed to identify them?
+
+    \A I am not sure whether we can measure times. In this scenario, I think we'd need 5 races (one race for each horse).
+    Therefore, assume we do not measure them.
+    I can prove a solution with 7 races exists. I would only be left to prove that a solution with 6 rates exists.
+    To prove 7 races exist: 5 races to make 5 groups of 5 race. Then 1 race for the winners (this excludes the groups where the 4\tsup{th} and 5\tsup{th} horses previously won, as well as the 2\tsup{nd} and 3\tsup{rd} of the \ldots).
+    The first position is known, and 5 horses are left with unclear positions just after: let them race.
+\end{qanda}
+
+\begin{qanda}
+    \Q If $x \hat{.} x \hat{.} x \dots = 2$, what is $x$?
+
+  \A The idea with these kind of questions is to exploit the infiniteness of these series.
+  We have $x^2 = 2$ which implies $x = \sqrt{2}$, as we exclude the negative solution. 
+\end{qanda}
+
+
+\subsection{Thinking out of the box}
+
+\begin{qanda} % box packing
+  \Q Can you pack 53 bricks of dimensions 1 $1 \times 1 \times  4$ into a $6 \times 6 \times 6$ cube?
+  \A Intuitively, I think that $1 + 1 + 4 = 6$, which may hint some strategy.
+  In terms of maths, let us make basic checks. The volume of the cube is $6^3=216$, while the volume of the bricks is $4 \cdot  53 = 212$. We have 4 units of volume that we can leave empty.
+  
+  The solution tells us to think of the 27 $2 \times 2 \times 2$ sub-cubes that make up the bigger cube. 
+  We can color these small cubes in 2 colours, such that 2 adjacent small cubes have different colours. Without loss of generality, 14 will be white and 13 will be black.
+  Now, each brick in the configuration will be placed in a way that occupies the same volume of white and black cubes. This means that we can at most cover 13 black cubes and white cubes, leaving a volume equivalent to a white cube empty (that is 8 units). 
+  We would still need to back an extra brick in the cube. \\
+  \emph{Once understood, it's easy. However it is hard to think about this from scratch. The solution is very elegant, creating an \textquote{imbalance} that can't be broken.}
+\end{qanda}
+
+\begin{qanda} % Calendar cubes
+    \Q You just had two dice custom-made. 
+    Instead of the numbers 1 to 6, you place single-digit numbers on the faces of each dice so that every morning you can arrange the dice in a way as to make the two front faces show the current day of the month. 
+    You must use both dice (1 must be shown as 01), but you can switch the order of the dice if you want. What numbers do you have to put on the six faces of each of the two dice to achieve that?
+
+    \A How many combinations of values do we need? We need to count until 31, but to avoid double counting, we only consider numbers with digits reshuffled in increasing order.
+    There are 9 combinations starting with 0 (from 01 to 09); 9 combinations starting with 1 (from 11 to 19); 8 combinations starting with 2 (from 22 to 29); 0 combinations starting with 3.
+    This makes up a total of 26 combinations. 
+    Both dices must include the numbers 1 and 2, else we cannot represent the numbers 11 and 12, and both must include 0, else we can only represent 6 numbers leading with 0.
+    We are left with 3 spots per dice.
+    This is not enough: we have 7 spots for 6 numbers.
+    The stupid solution is just to use the 6 as a 9, stupid but smart.
+\end{qanda}
+
+\begin{qanda} % Door to offer
+    \Q You are facing two doors.
+    One leads to your job offer and the other leads to exit.
+    In front of either door is a guard.
+    One guard always tells lies and the other always tells the truth. 
+    You can only ask one guard one yes/no question.
+    Assuming you do want to get the job offer, what question will you ask.
+
+    \A We need to find a question such that both guards would give the same answer if the job offer is behind either door. We can maybe have a double condition: such as \textquote{is this the door, and are you honest?}
+\end{qanda}
+
+
+\subsection{Application of Symmetry}
+
+\begin{qanda} % coin piles
+  \Q Suppose that you are blind folded in a room and are told that there are 1000 coins on the floor.
+  980 of the coins have tails up and the other 20 coins have heads up. 
+  Can you separate the coins into two piles so to guarantee both piles have equal number of heads? 
+  Assume that you cannot tell a coin's side by touching it, but you are allowed to turn over any number of coins.
+
+  \A Take 20 coins, and flip them. (this works in general, write proof).
+\end{qanda}
+
+\begin{qanda}
+    \Q
+    You are given 3 bags of fruits. One has apples in it; one has oranges in it; and one has a mix of apples and oranges in it. 
+    Each bag has a label on it (apple, orange or mix).
+    Unfortunately, your manager tells you that ALL bags are mislabeled. Develop a strategy to identify the bags by taking out minimum number of fruits? You can take any number of fruits from any bag.
+
+    \A Pick a single fruit from the mixed bag. Proceed by exclusion.
+  
+\end{qanda}
+
+\begin{qanda} % Wise men
+    \Q
+    A sultan has captured 50 wise men.
+    He has a glass currently standing bottom down. Every minute he calls one of the wise men who can choose either to turn it over (set it upside down or bottom down) or to do nothing. 
+    The wise men will be called randomly, possibly for an infinity number of times. 
+    When someone called to the sultan correctly states that all wise men have already been called to the sultan at least once, everyone goes free.
+    But if his statement is wrong, the sultan puts everyone to death.
+    The wise men are allowed to communicate only once before they get imprisoned into separate rooms. Design a strategy that lets the wise men go free.
+
+    \A 49 YOFO (you only flip once) and one counter which counts how many times the cup has been flipped.
+    \emph{Very clean use of simmetry in the strategy.}
+\end{qanda}
+
+
+\subsection{Series summations}
+
+\begin{qanda} % Clock pieces
+  
+    \Q 
+    A clock (numbered 1 to 12) fell off the wall and broke into three pieces.
+    You find that the sums of the numbers on each piece are equal. What are the numbers on each piece?
+
+    \A Each piece must have a sum of $\frac{12\cdot 13}{2\cdot 3}=26$. As $\frac{26}{3}=12$, it is impossible to achieve this sum with three numbers on the clock, so we must have four numbers on each piece. Now we need a bit of inspection: $11 + 12 + 1 + 2 = 26$ and $5 + 6 + 7 + 8=26$. We are left with $3 + 4 + 9 + 10$. (Nice to think of it as having pairs of numbers that sum to 13).
+
+\end{qanda}
+
+\begin{qanda} % missing integers
+    \Q Suppose we have 98 distinct integers from 1 to 100. What is a good way to find out the two missing numbers
+
+    \A I am confused about what \textquote{good} means: time complexity?
+    The solutions compute $x+y$ and $(x+y)^2$ as a function of the sum of the 98 numbers and the sum of the squares.
+\end{qanda}
+
+\begin{qanda} % Counterfeit coins I
+
+    \Q
+    There are 10 bags with 100 identical coins in each bag.
+    In all bags but one, each coin weighs 10 grams. 
+    However, all the coins in the counterfeit bag weigh either 9 or 11 grams.
+    Can you find the counterfeit bag in only one weighting, using a digital scale that tells the exact weight?
+    (allowed to take any number of coins from any bag)
+
+    \A
+    The weighting strategy needs to discriminate the original bag from which the counterfeit bag is. 
+    This means that we have to take a different amount of coins from each bag. The pigeonhole principle tells us the only option is to take $n$ coins from the $n\tsup{th}$ bag.
+    Denote the index of the counterfeit bag as $i$, and let $w$ be equal to 1 if the coins in the bag weigh 11 grams, and -1 otherwise.
+    The sum of the weights of this coins will be
+    \[
+        \sum_{n=1}^{10} 10 n + iw  = \frac{10\cdot10\cdot11}{2} - iw = 550 - iw.
+    \]
+    Is is easy to see that subtracting 500 from the scale reading will reveal both the \textquote{sign} of the difference in counterfeit weight, and the bag.
+\end{qanda}
+
+
+\begin{qanda} % Glass balls
+  \Q You are holding two balls in a 100-story building.
+  If a ball is thrown out of the window, it will not break if the floor number is less than $X$, and it will always break if the floor number is equal to or greater than $X$.
+  You would like to determine $X$.
+  What is the strategy that will minimize the number of drops for the worst case scenario?
+
+  \A
+  For any strategy, we need to compute the worst case scenario.
+  Mathematically, we interested in finding a number in the range $N=\{1, 2, \ldots, 100\}$ asking questions such as: is $X \geq n$ for any $n \in N$.
+  It should be possible to get this in: $\lceil \log_2 100 \rceil = 7$ iterations, by always throwing the ball from the middle floor of the remaining range.
+
+  This is not the solution but honestly I don't understand what they are doing. Feels like we are answering different questions? 
+\end{qanda}

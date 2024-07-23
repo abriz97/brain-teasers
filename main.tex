@@ -1,0 +1,57 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage{amsmath}
+\usepackage{natbib}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{csquotes}
+\usepackage{tikz}
+
+\newcommand\tsub[1]{\textsubscript{#1}}
+\newcommand\tsup[1]{\textsuperscript{#1}}
+
+\newenvironment{qanda}{\setlength{\parindent}{0pt}}{\bigskip}
+\newcommand{\Q}{\bigskip\bfseries Q: }
+\newcommand{\A}{\par\textbf{A:} \normalfont}
+
+\fancyhf{}
+\fancyhead[LE]{\nouppercase{\rightmark\hfill\leftmark}}
+\fancyhead[RO]{\nouppercase{\leftmark\hfill\rightmark}}
+\fancyfoot[LE,RO]{\hfill\thepage\hfill}
+\setlength{\headheight}{24pt}
+% \lhead{\thesection\sectionmark}
+% \rhead{\\Page \thepage}
+
+\pagestyle{fancy}
+\pagenumbering{gobble}
+
+\date{2024-07-04}
+\title{Brain Teasers for interview preparation}
+
+
+\begin{document}
+  \maketitle
+  Many problems are taken from \href{https://academyflex.com/wp-content/uploads/2024/03/a-practical-guide-to-quantitative-finance-interviews.pdf}{A Practical Guide to Quantitative Finance Interviews} by Xinfeng Zhou.
+  \tableofcontents
+
+  \newpage
+  \pagenumbering{arabic}
+
+  \section{Useful facts learnt along the way}
+
+  \begin{itemize}
+    \item The \href{https://en.wikipedia.org/wiki/Cayley\%E2\%80\%93Hamilton_theorem}{Cayley Hamilton theorem} states that a square matrix $A$ satisfies its own characteristic equation. Useful for finding the inverse of a matrix.
+  \end{itemize}
+
+  \import{sections/}{brainteasers.tex}
+  \newpage
+  \import{sections/}{calculus_linear_algebra.tex}
+  \newpage
+  \import{sections/}{basic_probability.tex}
+  \newpage
+  \bibliographystyle{plain}
+  \bibliography{MyLibrary}
+
+\end{document}
