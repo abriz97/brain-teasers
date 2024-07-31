@@ -1,7 +1,7 @@
 \documentclass{article}
 
 \usepackage{fancyhdr}
-\usepackage{amsmath}
+\usepackage{amsmath, amssymb}
 \usepackage{natbib}
 \usepackage{hyperref}
 \usepackage{xcolor}
@@ -15,6 +15,17 @@
 \newenvironment{qanda}{\setlength{\parindent}{0pt}}{\bigskip}
 \newcommand{\Q}{\bigskip\bfseries Q: }
 \newcommand{\A}{\par\textbf{A:} \normalfont}
+
+\newenvironment{qanda2}[1][]{%
+    \setlength{\parindent}{0pt}%
+    \begin{mdframed}[linecolor=black,backgroundcolor=gray!10]%
+    \textbf{#1} % Optional title for the question
+    \par\textbf{Q:}%
+}{%
+    \par\textbf{A:} \normalfont%
+    \end{mdframed}%
+    \bigskip
+}
 
 \fancyhf{}
 \fancyhead[LE]{\nouppercase{\rightmark\hfill\leftmark}}
@@ -51,6 +62,11 @@
   \newpage
   \import{sections/}{basic_probability.tex}
   \newpage
+
+  \import{sections/}{others.tex}
+
+
+
   \bibliographystyle{plain}
   \bibliography{MyLibrary}
 

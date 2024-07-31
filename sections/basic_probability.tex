@@ -1,4 +1,259 @@
-\section{Basic probability}
+\section{Probability Theory}
+
+\subsection{Basic probability and set operations}
+ 
+\begin{qanda} % Coin Toss Game
+    \Q
+  Two gamblers are playing a coin toss game.
+  Gambler $A$ has $(n+1)$ fair coins; $B$ has $n$ fair coins.
+  What is the probability that $A$ will have more heads than $B$ if both flip all their coins?
+
+  \A
+  Let us define $N^P_ i$ as the number of heads obtained by player $P$ after $i$ coin tosses.
+  We can compute the required probability by conditioning on what would have happened right before the last coin toss from $A$.
+  \[
+      \mathbf{P}( N^A_{n+1} > N^B_n ) = 
+      \mathbf{P}( N^A_n} > N^B_n) +
+\mathbf{P}( N^A_n} = N^B_n}) \cdot \frac{1}{2} +
+      \mathbf{P}( N^A_n} < N^B_n}) \cdot 0.
+  \]
+  By simmetry, if $p := \mathbf{P}( N^A_n} < N^B_n})$, we have: 
+  \[
+      \mathbf{P}( N^A_{n+1} > N^B_n ) = 
+      p +
+      (1-2p) \cdot \frac{1}{2} = \frac{1}{2}  + p - p = \frac{1}{2}.
+  \]
+  \emph{I did not expect the answer to be so simple!}
+
+  % Clearly, if $A$ and $B$ had the same number of coins, the probability of $A$ having more heads than $B$ would be $\frac{1 - \mathbf{P}(N^A_n} = N^B_n})}{2$.
+  % The probability of a draw can be calculated as \ldots 
+\end{qanda}
+
+\begin{qanda} % Card Game
+    \Q
+    A casino offers a simple card game.
+    There are 52 cards in a deck with 4 cards for each value.
+    Each time the cards are thoroughly shuffled.
+    You pick up a card from the deck and the dealer picks another one without replacement. 
+    If you have a larger number, you win; if the numbers are equal or yours is smaller, the house wins. What is the probability of you winning?
+
+    \A
+    There are probably multiple ways to think about this. 
+    The first that comes to mind consists in calculating the probability $p$ of the event where the two drawn cards have the same value. Then, the desired probability would be $\frac{1-p}{2}$.
+    The calculations are easy! $p = \frac{3}{51}$, so the desired probability is $\frac{48}{102} = \frac{8}{17}$.
+\end{qanda}
+
+\begin{qanda} % Drunk Passenger
+    \Q
+    A line of 100 airline passengers are waiting to board a plane.
+    They each hold a ticket to one of the 100 seats on that flight.
+    For convenience, let's say that the $n$-th passenger in line has a ticket for the seat number $n$.
+    Being drunk, the first person in line picks a random seat (equally likely for each seat). 
+    All of the other passengers are sober, and will go to their proper seats unless it is already occupied; in that case, they will randomly choose a free seat.
+    You are person number 100. What is the probability that you end up in your seat (i.\,e.\ seat number 100)?
+
+    \A
+    I know the problem, but let us try to analyse it in line with the techniques learnt until now. There is a feeling for which seats number 2, \ldots, 99 are equivalent, while seats 1 and 100 are \textquote{special}.
+    This suggests us to look at two complementary events: the event where seat 1 is taken before seat 100, and the event where seat 100 is taken before seat 1.
+    Note both events have equal probability (by simmetry).
+    If seat 1 is taken before seat 100, say by passenger $k$, this means that the following passengers will take their own seats, including me.
+    As such, the probability of sitting at the correct place is $\frac{1}{2}$.
+\end{qanda}
+
+\begin{qanda} % N points on a circle
+  \Q
+  Given $N$ points drawn randomly on the circumference of a circle, what is the probability that they are all within a semicircle?
+\end{qanda}
+
+\subsection{Combinatorial analysis}
+
+\begin{qanda} % Poker hands
+  \Q
+  We are playing poker with hands of 5 cards.
+  What are the probabilities of getting hands with four-of-a-kind? 
+  Hands with a full house?
+  Hands with two pairs?
+
+  \A
+  \[
+  \mathbf{P}(\text{Four-of-a-kind}) =  
+  \left( 1 \cdot \frac{3}{51} \cdot \frac{2}{50} \cdot \frac{1}{49}  \cdot 1 \right) \cdot \binom{5}{1} = \frac{3}{51\cdot 5\cdot 49} \approx 0.00024.
+  \]
+
+  For a full-house, we need to chose two cards out of 13, but order matters!
+  Indeed one card will be repeated three times, while the other will be repeated twice.
+  \[
+  \mathbf{P}(\text{Full-house}) =  \frac{52 \cdot 48 \cdot 3 \cdot  3 \cdot  2 \cdot \binom{5}{2} }{52 \cdot 51 \cdot  50 \cdot  49 \cdot  48} = \frac{180}{51\cdot 50\cdot 49} \approx 0.0014.
+  \]
+  Hands with two pairs: % should be 0.047
+  \[
+  \mathbf{P}( \text{ Two pairs} )  = \frac{52 \cdot 48 \cdot  3 \cdot  3 \cdot 44 \cdot \binom{5}{1}}{52! / 47!} = \frac{9 \cdot  44}{ 51 \cdot 10 \cdot 49} \approx 0.0033.
+  \]
+
+  \emph{The last seems wrong. In general, it might be wiser to count the numerator and denominators separately, combinatorially.}
+\end{qanda}
+
+\begin{qanda} % Hopping rabbit
+  \Q
+  A rabbit sits at the bottom of a staircase with $n$ stairs.
+  The rabbit can hop up only one or two stairs at a time. How many different ways are there for the rabbit to ascend to the top of the stairs?
+
+  \A
+  This is a dynamic programming problem.
+  Let $f(n)$ be the number of ways to reach the $n$-th step.
+  Clearly, $f(1)=1$ and $f(2) = 2$.
+  For $n \geq 3$, we have $f(n) = f(n-1) + f(n-2)$, and we can see this corresponds to the Fibonacci sequence. 
+  To calculate an expression for $f(n)$, we can use linear algebra.
+  \[
+  \begin{pmatrix} f(n+2) \\ f(n+1) \end{pmatrix} 
+  = 
+  \begin{pmatrix}
+    1 & 1  \\
+    1 & 0 
+  \end{pmatrix}^1
+  \begin{pmatrix} f(n+1) \\ f(n) \end{pmatrix}  =
+  \begin{pmatrix}
+    1 & 1  \\
+    1 & 0 
+\end{pmatrix}^{n}
+  \begin{pmatrix} f(2) \\ f(1) \end{pmatrix} 
+  \]
+  We can then diagonalise the matrix to obtain an expression for $f(n+2)$.
+  The eigenvalues solve $0=-(1-\lambda)\lambda - 1 = \lambda^2 - \lambda - 1$, so that $\lambda_{1,2} = \frac{1 \pm \sqrt{5}}{2}$.
+  We can diagonalise the matrix as $A = P D P^{-1}$, where $D$ is a diagonal matrix with the eigenvalues on the diagonal, which will then yield a polynomial expression in terms of the two roots $\lambda_{1,2}$.
+\end{qanda}
+
+\begin{qanda} % Screwy pirates 2
+    \Q 
+    There are 11 pirates on a ship, with a loot they just won.
+    To protect their hard-won treasure, they gather together to put all the loot in a safe.
+    Still being a democratic bunch, they decide that only a majority - any majority - of them ($\geq 6$) together can open the safe.
+    To access the treasure, every lock needs to be opened. 
+    Each lock can have multiple keys; but each key only opens one lock. The locksmith can give more than one key to each pirate.
+
+    What is the smallest number of locks needed?
+    And how many many keys must each pirate carry?
+
+    \A 
+    We know that any group of 6 pirates can access the treasure.
+    It feels like there need to be at least 6 locks. 
+    If there were only 5 locks, then only 5 keys would be used, meaning a subset of 5 pirates could access the locks.
+
+    We want all groups of 5 pirates $\binom{11}{5}$ not to be able to open the locks, and all groups of 6 pirates $\binom{11}{6}$ to be able to.
+    The two numbers equal to $77$.
+
+    For simplicity, let us consider the case in which all pirates have the same number of keys, $k$, each opening a separate lock, from a total of $l$.
+    In this scenario, each 5-pirates team would have $5k$ keys, while each 6-pirates team would have $6k$ keys.
+
+    \emph{need to think about this more carefully, but sounds interesting.}
+\end{qanda}
+
+\begin{qanda} % Chess tournament
+    \Q 
+    A chess tournament has $2^n$ players with skills $1>2> \dots > 2^n$. It is organized as a knockout tournament, so that after each round only the winner proceeds to the next round. 
+    Except for the final, opponents in each round are drawn at random. 
+    Let's also assume that when two players meet in a game, the player with better skills always wins.
+    What's the probability that players 1 and 2 will meet in the final?
+
+    \A 
+    Upon thinking about it, the answer should be $\frac{1}{2}$ (or close to). The random allocation after every turn doesn't really matter, we can instead consider a \textquote{typical} tournament table, where the initial \textquote{positions} are randomly allocated.
+    1 and 2 will meet in the final if they are spawned into two different halves of the table. 
+    This happens with probability $1 \cdot \frac{2^{n-1}}{2^n - 1}$.
+
+    % As player 1 will always win, she will always reach the final. Player 2 will reach the final if and only if she doesn't meet player 1 beforehand.
+    % We are then interested in computing the probability that the two players meet in the other rounds, so let us denote by $p_j$ the probability of meeting in round $j$ (the final being round $n$). Let us also denote by $p_{j|j-1}$ the probability of meeting in round $j$ given that they didn't meet in round $j-1$.
+    % \[
+    %     p_n = 1 - \sum_{k=1}^{n-1} p_k =
+    %     1 - p_1 - \sum_{k=1}^{n-2} p_{k} p_{k+1|k}
+    % \]
+    % I am waffling, let us start with computations instead:
+    % \begin{align*}
+    %     p_1 &= \frac{2^n - 2}{2^n} = \frac{2^{n-1} - 1}{2^{n-1}} = 1 - \frac{1}{2^{n-1}}, \\
+    %     p_2 &= (1 - p_1) \cdot  \frac{1}{2^{n-1}}  \\
+    %     p_3 &= (1 - p_2)(1-p_1) \cdot  \frac{1}{2^{n-2}} 
+    % \end{align*}
+
+    % There must be a simpler solution, it feels like it should be 1/2.
+
+\end{qanda}
+
+\begin{qanda} % Application letters
+    \Q 
+    You are sending job applications to 5 firms: A, B, C, D, E.
+    You have 5 envelopes on the table for each firm, and 5 cover letters personalized for each firm.
+    Your friend comes and mixes the letters in each envelope.
+    What is the probability that all 5 cover letters are mailed to the wrong firms?
+
+    \A 
+    After thinking a little about this, I came to think of the problem in terms of \textquote{cycles}. What I mean can be clarified by noting that every allocation of letters corresponds to the specification of a permutation map:
+    \[
+    p\colon \{A, B, C, D, E\}\to \{A, B, C, D, E\}.
+    \]
+    Now, $p$ could be \textquote{composed} of two other permutation maps, for example, one shuffling elements of the set $\{A, B\}$, and the other shuffling the elements of the set $\{C, D, E\}$ \footnote{\textit{ This \textquote{combination} operation is called the direct sum, but this is not relevant.}}.
+    For each permutation map, we can define the \textquote{length of the cycle} $c$ as the minimum number of repeated applications of the map to return to the original position, that is $p^c(X) = X$ for all $X$ in the domain.
+    There are two cases that are allowed, if we want to avoid sending a cover letter to the correct firm:
+    \begin{itemize}
+        \item A single cycle of length 5. Let us define the start of the cycle as the letter for firm $A$. There are 4 choices for the second letter, 3 for the third, 2 for the fourth and 1 for the last. This gives $4!$ possibilities.
+        \item A cycle of length 3, and one of length 2. Similar as the above, if we had 3 firms selected for the 3-cycle, these would amount to $2!$ firms. The remaining 2 firms would be selected in $1!$ ways.
+        The total is then $\binom{5}{3} 2!$
+    \end{itemize}
+    The required probability amounts to $\frac{4! + \binom{5}{3} 2!}{5!} = \frac{(24 + 20)}{5!} = \frac{11}{30}$.
+
+    \emph{
+    The correct solution involved a cute application of the inclusion-exclusion principle, based on the definition of the event $E_i$ as being the event where the $i$-th letter is sent to the correct firm. I think my solution is interesting though, and it's interesting how these two might relate.
+    As the number of letter scales up, my solution might be unfeasible because we require the computation of the number of partitions?
+    }
+\end{qanda}
+
+\begin{qanda} % Birthday problem
+    \Q
+    How many people do we need in a class to make the probability that two people have the same birthday more than $\frac{1}{2}$?
+
+    \A
+    Consider $n$ classmates, and a year of 365 days.
+    The probability that no two people share the same birthday is:
+    \[
+        p_n = \frac{365! / (365-n)! }{365^n} = 
+        p_{n-1} \cdot \frac{365-(n-1)}{365}.
+    \]
+    We can put this in a computer, but can we guess such $n$ from the following recurrence relation?
+    The minimum $n$ such that $p_n < \frac{1}{2}$ is 23.
+\end{qanda}
+
+\begin{qanda} % 100th digit
+  \Q
+  What is the 100\tsup{th} digit to the right of the decimal point in the decimal representation of $(1 + \sqrt{2})^{3000}$?
+
+  \A
+  We care about the 100\tsup{th} digit, this is equivalent to multiplying by $10^{100}$ and taking modulo 10, then floor (or viceversa).
+  The answer $d$ can then be expressed as:
+  \begin{align*}
+      d &= \lfloor 10^{100} (1 + \sqrt{2})^{300 \cdot  100} \mod 10 \rfloor \\
+        &= \lfloor (10 \cdot (1+\sqrt{2})^{300} )^{100} \rfloor \mod 10 \\
+        &= \lfloor (10 \cdot (1+\sqrt{2})^{300} )\rfloor^{100} \mod 10 
+  \end{align*}
+
+  % This question definitely requires some approximations, so let us use the binomial expansion.
+  % \[
+  %     (1 + \sqrt{2})^{3000} = 1 + 3000 \sqrt{2} + \binom{3000}{2} 2 + \binom{3000}{3} \sqrt{2}2 + \dots
+  % \]
+  \textcolor{green}{Not the correct solution: interplay of $(1 \pm \sqrt{2})$.}
+\end{qanda}
+
+\begin{qanda} % Cubic of integer
+  \Q
+  Let $x$ be an integer between $1$ and $10^{12}$, what is the probability that the cubic of $x$ ends in $11$?
+
+  \A
+  I am stupid, this is way easier than I thought it was.
+  If $x \mod 100 = 11$, this means that $x^3 \mod 10 = 1$.
+  There are no integers that cubed end in 1, except of 1
+  However, $1^3$ and $11^3$ do not end in 11.
+  The probability is then 0. \textit{can compete the proof by showing $(100+n)^3 \mod 100 = n^3 \mod 100.$}
+\end{qanda}
+
+\subsection{Nu se}
+
 
 \begin{qanda}
     \Q An ant is placed in a corner of a cube and cannot move. A spider starts from the opposite corner, and can move along the cube's edges in any direction $(x,y,z)$ with equal probability ($\frac{1}{3}$) . On average, how many steps will the spider need to get to the ant?
@@ -46,4 +301,5 @@
         \end{equation*}
         \emph{I believe this answer is correct, see \href{https://online.stat.psu.edu/stat414/lesson/21/21.1}{link}. I am not sure there is anything more elegant? In terms of generalisation, we can reduce the general case to this one through linear transformations(?).}
     \end{qanda}
+
 

@@ -1,0 +1,46 @@
+\section{Questions from other books or sources.}
+
+\begin{qanda}
+  \Q You are told a coin has 60\% of probability of landing heads.
+  If I gave you 1 to 1 odds, would you want to play? 
+  How would you be in order to maximise your winnings and minimise risk in a long term betting strategy?
+
+  \A
+  As the expectation of the game is positive ($-0.4 + 0.6=0.2$), a strategy maximising the expected value suggests us to play.
+  By the law of large numbers, the more games are played, the closer the average winnings will be to the expected value.
+  Under this perspective, the question of how much to bet appears to be irrelevant.
+
+  However, the CLT only holds if we \emph{can} play an infinite number of games.
+  This may not be the case, if, for example we bet all our money in the first game and lose.
+  To minimise the risk of ruin, knowing we can play an infinite number of games, we should bet an infinitesimal amount of our wealth infinitely many times.
+
+  The answer to this question may be more interesting if the game can only be played $N$ times.
+  Let $X_n$ be the amount of money we have at time $n$.
+  Consider two strategies:
+  \begin{itemize}
+      \item[\textbf{F}] Betting a fixed amount of money $M$ at each game, if $X_n \geq M$.
+      \item[\textbf{Q}] Betting a fraction $\alpha$ of our wealth at each game.
+  \end{itemize}
+  The first strategy incurs a risk of ruin, while the second one doesn't. Intuitively, this is more sound, so let us examine it.
+  The profits after $T$ games can be explicitly written as:
+  \[
+      X_T = X_0 \prod_{n=1}^T (1 + \alpha(2H_{n} - 1)),
+  \]
+  where $H_n$ is a Bernoulli random variable with probability $0.6$ indicating whether the $n$-th coin flip was heads. 
+  It is natural to consider the logarithm, to transform the product into a sum.
+  Let us define $L_t := \log X_t$, and $B_t =\log(1 + \alpha(2H_{n} - 1)) $ so that:
+  \[
+  L_T = L_0 + \sum_{n=1}^T \log(1 + \alpha(2H_{n} - 1)) = L_0 + \sum_{n=1}^T B_n.
+  \]
+  We have a sum of independent random variables, so the CLT applies.
+  We maximise the expected value of $L_T$ by maximising the expected value of $B_n$:
+  \[
+      \mathbf{E}[B_n] = \log(1 + \alpha) 0.6 + \log(1 - \alpha) 0.4. 
+  \]
+  Taking derivatives and setting them to 0 yields:
+  \[
+  \frac{0.6}{1+\alpha} = \frac{0.4}{1-\alpha} \implies
+  6 - 6\alpha = 4 + 4\alpha \implies \alpha = 0.2.
+  \]
+  We can thus maximise the growth rate of our wealth by betting 20\% of our wealth at each game.
+\end{qanda}
